@@ -46,6 +46,7 @@ public class RollerCommand extends Command {
   public boolean isFinished() {
     // Return false to indicate that this command never ends. It can be interrupted
     // by another command needing the same subsystem.
+    rollerSubsystem.runRoller(0, 0);
     return false;
   }
 }
