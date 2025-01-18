@@ -14,12 +14,11 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.RollerConstants;
-import frc.robot.Commands.RollerCommand;
+import frc.robot.commands.RollerCommand;
 import frc.robot.subsystems.CANRollerSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,11 +26,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
-import frc.robot.Commands.RollerCommand;
-
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -57,6 +51,7 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
+
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
@@ -80,15 +75,13 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    
-    m_operatorController.a().whileTrue(new RollerCommand(() -> RollerConstants.ROLLER_EJECT_VALUE, () -> 0, m_rollerSubsystem));
 
-    new JoystickButton(m_driverController, Button.kR1.value)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
+    //This is an example of how to bind a joystick button to a command, so you can use while true
+    JoystickButton aButton = new JoystickButton(m_operatorController, XboxController.Button.kA.value);
+    //I changed this do double for you because DoubleSupplier is just overcomplicated
+    //I don't see your RollerConstants in your github repository. Make sure to commit it.
+    aButton.whileTrue(new RollerCommand(0.5,  0, m_rollerSubsystem));
 
-    
             
   }
 
